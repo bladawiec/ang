@@ -1,28 +1,45 @@
-# Kursy walut NBP
+# Kursy walut NBP dla Magic
 
-Prosty modul Pythona do pobierania kursow walut z publicznego API NBP.
+Gotowe helpery i snippety do pobierania kursow walut z publicznego API NBP.
 
-## Uzycie
+Najwazniejsze pliki:
+
+- `NbpRates.cs` - helper C# do wklejenia lub dodania do projektu Magic.
+- `snippets/magic-csharp.cs` - krotki przyklad uzycia w snippecie C#.
+- `snippets/magic-vbnet.vb` - przyklad dla VB.NET.
+- `nbp_rates.py` - pierwotna wersja Python, zostawiona jako referencja.
+
+## C# w Magic
+
+Dodaj `NbpRates.cs` do projektu albo wklej klase do miejsca dostepnego dla snippetu.
+Potem w snippecie C# mozesz uzyc:
+
+```csharp
+var eur = NbpRates.GetMidRate("EUR");
+Console.WriteLine(eur);
+```
+
+Kurs z konkretnej daty:
+
+```csharp
+var eur = NbpRates.GetMidRate("EUR", "2026-07-09");
+Console.WriteLine(eur);
+```
+
+Tabela C, czyli kurs kupna i sprzedazy:
+
+```csharp
+var usd = NbpRates.GetRate("USD", "C");
+Console.WriteLine(usd.Bid + " / " + usd.Ask);
+```
+
+## Python
 
 ```python
 from nbp_rates import fetch_nbp_rate
 
 rate = fetch_nbp_rate("EUR")
 print(rate.mid)
-
-rate_c = fetch_nbp_rate("USD", table="C", rate_date="2026-07-09")
-print(rate_c.bid, rate_c.ask)
 ```
 
-## Co zwraca funkcja
-
-`fetch_nbp_rate` zwraca obiekt `NbpRate` z polami:
-
-- `currency`
-- `code`
-- `table`
-- `effective_date`
-- `mid` dla tabel A i B
-- `bid` oraz `ask` dla tabeli C
-
-Modul korzysta tylko z biblioteki standardowej Pythona.
+Kod C# i VB.NET korzysta tylko ze standardowych bibliotek .NET.
